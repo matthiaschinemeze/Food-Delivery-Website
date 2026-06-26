@@ -12,6 +12,8 @@ const searchButton = document.getElementById('search-button');
 const searchMessage = document.querySelector('.search-message');
 const reviewForm = document.getElementById('review-form');
 const reviewMessage = document.querySelector('.review-message');
+const reviewGrid = document.querySelector('.review-grid');
+const reviewLoadMoreBtn = document.getElementById('review-load-more');
 const trackForm = document.getElementById('track-form');
 const trackStatus = document.querySelector('.track-status');
 const orderItemsContainer = document.querySelector('.order-items');
@@ -67,7 +69,9 @@ function renderFoods(list) {
         addBtn.addEventListener('click', () => addToCart(food));
     });
 }
-
+if (foodLayout) {
+    renderFoods(foods);
+}
 function updateCart() {
     if (!cartItemsContainer || !totalText) return;
 
@@ -129,6 +133,17 @@ function updateCartCount() {
     const count = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.textContent = count;
 }
+if (cartBtn) {
+    cartBtn.addEventListener('click', event => {
+        event.preventDefault();
+        if (cartSidebar) cartSidebar.classList.add('active');
+    });
+}
+if (closeCart) {
+    closeCart.addEventListener('click', () => {
+        if (cartSidebar) cartSidebar.classList.remove('active');
+    });
+}
 
 function addToCart(food) {
     const existingItem = cart.find(item => item.name === food.name);
@@ -185,13 +200,11 @@ if (checkoutBtn) {
                 'Please login first'
             );
 
-            window.location.href =
-                'login.html';
+            window.location.href = 'login.html';
 
             return;
         }
-        window.location.href =
-            'checkout.html';
+        window.location.href = 'checkout.html';
     });
 }
 
@@ -285,11 +298,19 @@ function performSearch() {
         searchMessage.textContent = '';
     }
 }
-
-function showReviewMessage(message) {
-    if (!reviewMessage) return;
-    reviewMessage.textContent = message;
+if (searchForm) {
+    searchForm.addEventListener('submit', event => {
+        event.preventDefault();
+        performSearch();
+    });
 }
+if (searchButton) {
+    searchButton.addEventListener('click', event => {
+        event.preventDefault();
+        performSearch();
+    });
+}
+
 
 function handleTrackOrder(orderId) {
     if (!trackStatus) return;
@@ -309,37 +330,53 @@ function handlePayment(method) {
     renderOrderSummary();
 }
 
-//FOR FOOD CARD TO DISPLAY AND FOR SEARCH FUNCTIONALITY
-if (foodLayout) {
-    renderFoods(foods);
-}
-if (searchForm) {
-    searchForm.addEventListener('submit', event => {
-        event.preventDefault();
-        performSearch();
-    });
-}
-if (searchButton) {
-    searchButton.addEventListener('click', event => {
-        event.preventDefault();
-        performSearch();
-    });
+
+//REVIEW FORM FUNCTIONALITY TO ADD REVIEWS AND SAVE TO LOCAL STORAGE & CUSTOMER REVIEWS, SAVE TO LOCAL STORAGE AND SHOW MORE OR LESS REVIEWS
+const storedReviews = JSON.parse(localStorage.getItem('customerReviews') || 'null');
+const reviews = storedReviews || [
+    { name: 'Amaka O.', text: 'The delivery was on time and the food was still hot. Best service in town!', rating: '4.9/5' },
+    { name: 'David N.', text: 'Easy to use website and the menu is amazing. I order every week.', rating: '5.0/5' },
+    { name: 'Mercy A.', text: 'Excellent customer support and flavorful dishes. Highly recommended.', rating: '4.8/5' }
+];
+const reviewIncrement = 3;
+let visibleReviewCount = reviewIncrement;
+
+function saveReviews() {
+    localStorage.setItem('customerReviews', JSON.stringify(reviews));
 }
 
-
-if (cartBtn) {
-    cartBtn.addEventListener('click', event => {
-        event.preventDefault();
-        if (cartSidebar) cartSidebar.classList.add('active');
+function renderReviews() {
+    if (!reviewGrid) return;
+    reviewGrid.innerHTML = '';
+    const displayReviews = reviews.slice(0, visibleReviewCount);
+    displayReviews.forEach(review => {
+        const card = document.createElement('article');
+        card.classList.add('review-card');
+        card.innerHTML = `
+            <p>"${review.text}"</p>
+            <h4>${review.name}</h4>
+            <span>${review.rating}</span>
+        `;
+        reviewGrid.appendChild(card);
     });
+    if (reviewLoadMoreBtn) {
+        if (reviews.length <= reviewIncrement) {
+            reviewLoadMoreBtn.style.display = 'none';
+        } else {
+            reviewLoadMoreBtn.style.display = 'inline-flex';
+            reviewLoadMoreBtn.textContent = visibleReviewCount < reviews.length ? 'Show more reviews' : 'Show fewer reviews';
+        }
+    }
 }
 
-if (closeCart) {
-    closeCart.addEventListener('click', () => {
-        if (cartSidebar) cartSidebar.classList.remove('active');
-    });
+function showMoreReviews() {
+    if (visibleReviewCount < reviews.length) {
+        visibleReviewCount = Math.min(reviews.length, visibleReviewCount + reviewIncrement);
+    } else {
+        visibleReviewCount = reviewIncrement;
+    }
+    renderReviews();
 }
-
 if (reviewForm) {
     reviewForm.addEventListener('submit', event => {
         event.preventDefault();
@@ -349,10 +386,36 @@ if (reviewForm) {
             showReviewMessage('Please provide a name and review.');
             return;
         }
+        addReview(nameInput.value, textInput.value);
         showReviewMessage('Thanks! Your review has been submitted.');
         reviewForm.reset();
+        if (reviewGrid) {
+            reviewGrid.firstElementChild?.scrollIntoView({ behavior: 'smooth' });
+        }
     });
 }
+if (reviewGrid) {
+    renderReviews();
+}
+if (reviewLoadMoreBtn) {
+    reviewLoadMoreBtn.addEventListener('click', showMoreReviews);
+}
+function showReviewMessage(message) {
+    if (!reviewMessage) return;
+    reviewMessage.textContent = message;
+}
+
+function addReview(name, text) {
+    const newReview = {
+        name: name.trim(),
+        text: text.trim(),
+        rating: '5.0/5'
+    };
+    reviews.unshift(newReview);
+    saveReviews();
+    renderReviews();
+}
+
 
 if (trackForm) {
     trackForm.addEventListener('submit', event => {
