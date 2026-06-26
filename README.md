@@ -58,5 +58,4 @@ In Development: The frontend is currently being developed, with backend integrat
 👨‍💻 Author
 Chinemeze Matthias
 
-
-Aspiring Full-Stack Web Developer passionate about building clean, respo
+Aspiring Full-Stack Web Developer passionate about building clean, responsive, and user-friendly web applications.
