@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - FoodieExpress</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="checkout-header">
+        <div>
+            <h1>Checkout</h1>
+            <p>Confirm your order and delivery details.</p>
+        </div>
+        <a class="back-home" href="index.html">Back to Menu</a>
+    </header>
+
+    <section class="checkout">
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="order-items"></div>
+            <h3 class="order-total">Total: ₦0</h3>
+        </div>
+
+        <div class="delivery-info">
+            <h2>Delivery Info</h2>
+            <input type="text" id="customer-name" placeholder="Full Name" required>
+            <input type="text" id="customer-address" placeholder="Address" required>
+            <input type="text" id="customer-phone" placeholder="Phone Number" required>
+            <textarea id="customer-notes" placeholder="Delivery notes (optional)" rows="4"></textarea>
+            <div class="payment">
+                <h2>Payment Method</h2>
+                <button id="payDelivery">Pay on Delivery</button>
+                <button id="payOnline">Pay Online</button>
+            </div>
+            <p class="checkout-message"></p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7e6" />
+      <stop offset="100%" stop-color="#ffe4c7" />
+    </linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f3f4f6" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" rx="40" fill="url(#bg)" />
+  <ellipse cx="400" cy="450" rx="320" ry="100" fill="#f1b56a" opacity="0.25" />
+  <ellipse cx="400" cy="370" rx="260" ry="100" fill="url(#plate)" />
+  <circle cx="360" cy="340" r="70" fill="#f97316" />
+  <circle cx="460" cy="340" r="50" fill="#fb923c" />
+  <circle cx="320" cy="400" r="35" fill="#f59e0b" />
+  <rect x="240" y="300" width="120" height="80" rx="35" fill="#ffffff" stroke="#e5e7eb" stroke-width="6" />
+  <path d="M260 320 C280 300 310 300 330 320" stroke="#ec4899" stroke-width="10" fill="none" stroke-linecap="round" />
+  <path d="M260 340 C280 360 310 360 330 340" stroke="#22c55e" stroke-width="10" fill="none" stroke-linecap="round" />
+  <path d="M260 360 C280 380 310 380 330 360" stroke="#2563eb" stroke-width="10" fill="none" stroke-linecap="round" />
+  <rect x="470" y="280" width="200" height="120" rx="30" fill="#ffffff" stroke="#e5e7eb" stroke-width="6" />
+  <path d="M500 320 L600 360" stroke="#f97316" stroke-width="18" stroke-linecap="round" />
+  <path d="M520 340 L620 380" stroke="#eab308" stroke-width="18" stroke-linecap="round" />
+  <path d="M540 300 L660 340" stroke="#14b8a6" stroke-width="18" stroke-linecap="round" />
+  <circle cx="600" cy="190" r="70" fill="#e2e8f0" />
+  <path d="M560 170 C570 140 630 140 640 170" stroke="#1d4ed8" stroke-width="12" fill="none" stroke-linecap="round" />
+  <path d="M595 180 L595 220" stroke="#1d4ed8" stroke-width="10" stroke-linecap="round" />
+  <path d="M620 155 L620 195" stroke="#1d4ed8" stroke-width="10" stroke-linecap="round" />
+  <text x="140" y="140" font-size="52" fill="#0f172a" font-weight="700" font-family="Arial, sans-serif">Fresh meals,</text>
+  <text x="140" y="200" font-size="52" fill="#0f172a" font-weight="700" font-family="Arial, sans-serif">fast delivery.</text>
+</svg>
