@@ -1,11 +1,6 @@
+// HOMEPAGE ONLY
+
 const foodLayout = document.querySelector('.featured-food-layout');
-const cartItemsContainer = document.querySelector('.cart-items');
-const totalText = document.querySelector('.cart-footer h3');
-const cartCount = document.querySelector('.cart-count');
-const cartBtn = document.querySelector('.cart-link');
-const cartSidebar = document.querySelector('.cart-sidebar');
-const closeCart = document.querySelector('.close-cart');
-const checkoutBtn = document.querySelector('.checkout-btn');
 const searchInput = document.getElementById('search-input') || document.querySelector('.search-bar input');
 const searchForm = document.getElementById('search-form');
 const searchButton = document.getElementById('search-button');
@@ -16,12 +11,8 @@ const reviewGrid = document.querySelector('.review-grid');
 const reviewLoadMoreBtn = document.getElementById('review-load-more');
 const trackForm = document.getElementById('track-form');
 const trackStatus = document.querySelector('.track-status');
-const orderItemsContainer = document.querySelector('.order-items');
-const orderTotalText = document.querySelector('.order-total');
-const payDeliveryBtn = document.getElementById('payDelivery');
-const payOnlineBtn = document.getElementById('payOnline');
-const checkoutMessage = document.querySelector('.checkout-message');
 
+// Popular dishes data
 const foods = [
     { img: 'images/egusi.jpeg', name: 'Fresh Egusi Soup & Swallow', price: 4500 },
     { img: 'images/Afang-Soup-Recipe.jpeg', name: 'Fresh Afang Soup & Swallow', price: 5000 },
@@ -33,13 +24,7 @@ const foods = [
     { img: 'images/spaghetti.jpg', name: 'Spaghetti', price: 2500 }
 ];
 
-let cart = JSON.parse(localStorage.getItem('foodCart') || '[]');
-
-function saveCart() {
-    localStorage.setItem('foodCart', JSON.stringify(cart));
-}
-
-//FOR FOOD CARD FUNCTIONALITY AND TO ADD FOOD TO CART
+// FOOD RENDERING
 function renderFoods(list) {
     if (!foodLayout) return;
 
@@ -69,145 +54,13 @@ function renderFoods(list) {
         addBtn.addEventListener('click', () => addToCart(food));
     });
 }
+
 if (foodLayout) {
     renderFoods(foods);
 }
-function updateCart() {
-    if (!cartItemsContainer || !totalText) return;
 
-    cartItemsContainer.innerHTML = '';
-    let total = 0;
 
-    if (!cart.length) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
-    }
-
-    cart.forEach(item => {
-        total += item.price * item.quantity;
-
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-
-        cartItem.innerHTML = `
-            <img src="${item.img}" alt="${item.name}">
-            <div class="cart-info">
-                <h4>${item.name}</h4>
-                <p>₦${item.price}</p>
-                <div class="quantity-controls">
-                    <button class="decrease">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="increase">+</button>
-                </div>
-            </div>
-            <button class="remove-btn">&times;</button>
-        `;
-
-        cartItem.querySelector('.increase').addEventListener('click', () => {
-            item.quantity += 1;
-            updateCart();
-        });
-
-        cartItem.querySelector('.decrease').addEventListener('click', () => {
-            item.quantity -= 1;
-            if (item.quantity <= 0) {
-                cart = cart.filter(cartFood => cartFood.name !== item.name);
-            }
-            updateCart();
-        });
-
-        cartItem.querySelector('.remove-btn').addEventListener('click', () => {
-            cart = cart.filter(cartFood => cartFood.name !== item.name);
-            updateCart();
-        });
-
-        cartItemsContainer.appendChild(cartItem);
-    });
-
-    totalText.textContent = `Total: ₦${total}`;
-    updateCartCount();
-    saveCart();
-}
-
-function updateCartCount() {
-    if (!cartCount) return;
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = count;
-}
-if (cartBtn) {
-    cartBtn.addEventListener('click', event => {
-        event.preventDefault();
-        if (cartSidebar) cartSidebar.classList.add('active');
-    });
-}
-if (closeCart) {
-    closeCart.addEventListener('click', () => {
-        if (cartSidebar) cartSidebar.classList.remove('active');
-    });
-}
-
-function addToCart(food) {
-    const existingItem = cart.find(item => item.name === food.name);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({ ...food, quantity: 1 });
-    }
-    updateCart();
-    if (cartSidebar) cartSidebar.classList.add('active');
-}
-
-function renderOrderSummary() {
-    if (!orderItemsContainer || !orderTotalText) return;
-
-    orderItemsContainer.innerHTML = '';
-    let total = 0;
-
-    if (!cart.length) {
-        orderItemsContainer.innerHTML = '<p>Your cart is empty. Please add items before checkout.</p>';
-        orderTotalText.textContent = 'Total: ₦0';
-        return;
-    }
-
-    cart.forEach(item => {
-        total += item.price * item.quantity;
-        const orderItem = document.createElement('div');
-        orderItem.classList.add('order-item');
-        orderItem.innerHTML = `
-            <p>${item.name} x ${item.quantity}</p>
-            <span>₦${item.price * item.quantity}</span>
-        `;
-        orderItemsContainer.appendChild(orderItem);
-    });
-
-    orderTotalText.textContent = `Total: ₦${total}`;
-}
-
-//FOR CHECKOUT PAGE TO DISPLAY ORDER SUMMARY
-if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
-        if (!cart.length) {
-            alert(
-                'Your cart is empty'
-            );
-            return;
-        }
-        if (
-            localStorage.getItem(
-                'loggedIn'
-            ) !== 'true'
-        ) {
-             alert(
-                'Please login first'
-            );
-
-            window.location.href = 'login.html';
-
-            return;
-        }
-        window.location.href = 'checkout.html';
-    });
-}
-
+// SEARCH FUNCTIONALITY
 function filterFoods(query) {
     const normalized = query.trim().toLowerCase();
     if (!normalized) {
@@ -231,7 +84,6 @@ function filterRestaurants(query) {
     });
 }
 
-// FOR THE SEARCH BAR FUNCTIONALITY
 function performSearch() {
     if (!searchInput) return;
 
@@ -298,12 +150,14 @@ function performSearch() {
         searchMessage.textContent = '';
     }
 }
+
 if (searchForm) {
     searchForm.addEventListener('submit', event => {
         event.preventDefault();
         performSearch();
     });
 }
+
 if (searchButton) {
     searchButton.addEventListener('click', event => {
         event.preventDefault();
@@ -311,27 +165,7 @@ if (searchButton) {
     });
 }
 
-
-function handleTrackOrder(orderId) {
-    if (!trackStatus) return;
-    trackStatus.textContent = `Order ${orderId} is being prepared and will arrive soon.`;
-}
-
-function handlePayment(method) {
-    if (!checkoutMessage) return;
-    if (!cart.length) {
-        checkoutMessage.textContent = 'Your cart is empty. Please add items before completing checkout.';
-        return;
-    }
-    checkoutMessage.textContent = `Thank you! Your order has been placed using ${method}. We will deliver it soon.`;
-    cart = [];
-    saveCart();
-    updateCart();
-    renderOrderSummary();
-}
-
-
-//REVIEW FORM FUNCTIONALITY TO ADD REVIEWS AND SAVE TO LOCAL STORAGE & CUSTOMER REVIEWS, SAVE TO LOCAL STORAGE AND SHOW MORE OR LESS REVIEWS
+// REVIEW SYSTEM
 const storedReviews = JSON.parse(localStorage.getItem('customerReviews') || 'null');
 const reviews = storedReviews || [
     { name: 'Amaka O.', text: 'The delivery was on time and the food was still hot. Best service in town!', rating: '4.9/5' },
@@ -377,6 +211,23 @@ function showMoreReviews() {
     }
     renderReviews();
 }
+
+function showReviewMessage(message) {
+    if (!reviewMessage) return;
+    reviewMessage.textContent = message;
+}
+
+function addReview(name, text) {
+    const newReview = {
+        name: name.trim(),
+        text: text.trim(),
+        rating: '5.0/5'
+    };
+    reviews.unshift(newReview);
+    saveReviews();
+    renderReviews();
+}
+
 if (reviewForm) {
     reviewForm.addEventListener('submit', event => {
         event.preventDefault();
@@ -394,28 +245,21 @@ if (reviewForm) {
         }
     });
 }
+
 if (reviewGrid) {
     renderReviews();
 }
+
 if (reviewLoadMoreBtn) {
     reviewLoadMoreBtn.addEventListener('click', showMoreReviews);
 }
-function showReviewMessage(message) {
-    if (!reviewMessage) return;
-    reviewMessage.textContent = message;
-}
 
-function addReview(name, text) {
-    const newReview = {
-        name: name.trim(),
-        text: text.trim(),
-        rating: '5.0/5'
-    };
-    reviews.unshift(newReview);
-    saveReviews();
-    renderReviews();
-}
 
+// ORDER TRACKING
+function handleTrackOrder(orderId) {
+    if (!trackStatus) return;
+    trackStatus.textContent = `Order ${orderId} is being prepared and will arrive soon.`;
+}
 
 if (trackForm) {
     trackForm.addEventListener('submit', event => {
@@ -429,21 +273,8 @@ if (trackForm) {
     });
 }
 
-if (payDeliveryBtn) {
-    payDeliveryBtn.addEventListener('click', () => handlePayment('Pay on Delivery'));
-}
-
-if (payOnlineBtn) {
-    payOnlineBtn.addEventListener('click', () => handlePayment('Online Payment'));
-}
-
-updateCartCount();
-updateCart();
-renderOrderSummary();
-
-//TO SHOW LOGGED IN USER IN THE NAVBAR
+// USER AUTHENTICATION STATE
 const userAuth = document.querySelector('.user-auth');
-
 const user = JSON.parse(localStorage.getItem('foodUser'));
 const loggedIn = localStorage.getItem('loggedIn');
 
@@ -458,9 +289,7 @@ if (loggedIn === 'true' && user) {
         </a>
     `;
 
-    document
-    .getElementById('logout-btn')
-    .addEventListener('click', () => {
+    document.getElementById('logout-btn').addEventListener('click', () => {
         localStorage.removeItem('loggedIn');
         location.reload();
     });

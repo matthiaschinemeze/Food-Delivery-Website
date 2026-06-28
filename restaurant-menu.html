@@ -15,10 +15,9 @@
         </div>
         <div class="links">
             <a href="index.html">Home</a>
-            <a href="restaurant.html">Restaurants</a>
+            <a href="index.html#restaurants">Restaurants</a>
             <a href="index.html#track-order">Track Order</a>
             <a href="index.html#reviews">Reviews</a>
-            <a href="index.html#location">Location</a>
         </div>
         <div class="nav-actions">
             <div class="user-auth">
@@ -45,44 +44,35 @@
     </div>
 
     <main>
-        <section class="restaurant-layout">
-            <div class="section-title">
-                <h2>Featured Restaurants</h2>
-                <p>Hand-picked restaurants delivering quality meals near you.</p>
+        <section class="restaurant-hero">
+            <div class="restaurant-header">
+                <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                <div class="restaurant-info">
+                    <img id="rest-image" src="" alt="Restaurant" class="restaurant-banner">
+                    <div class="restaurant-details">
+                        <h1 id="rest-name"></h1>
+                        <p id="rest-desc"></p>
+                        <div class="restaurant-stats">
+                            <span id="rest-rating">4.8/5 ⭐</span>
+                            <span id="rest-delivery">30 mins delivery</span>
+                            <span id="rest-minorder">Min. ₦2,000</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="restaurant-image-layout">
-                <div class="card image-layout">
-                    <img src="images/restauarant 1.jpg" alt="Savor Foods & Delicacy">
-                    <div class="card-content">
-                        <h4>Savor Foods & Delicacy</h4>
-                        <p>Authentic local meals prepared fresh every day.</p>
-                        <a href="restaurant-menu.html?rest=savor" class="menu-link">View Menu</a>
-                    </div>
+        </section>
+
+        <section class="menu-section">
+            <div class="menu-container">
+                <div class="menu-tabs">
+                    <button class="tab-btn active" data-tab="main">Main Courses</button>
+                    <button class="tab-btn" data-tab="desserts">Desserts</button>
+                    <button class="tab-btn" data-tab="beverages">Beverages</button>
                 </div>
-                <div class="card image-layout">
-                    <img src="images/restauarant 2.jpg" alt="Nacho Daddy">
-                    <div class="card-content">
-                        <h4>Nacho Daddy</h4>
-                        <p>Spicy and savory dishes with fast delivery.</p>
-                        <a href="restaurant-menu.html?rest=nacho" class="menu-link">View Menu</a>
-                    </div>
-                </div>
-                <div class="card image-layout">
-                    <img src="images/restauarant 3.jpg" alt="Casablanca Restaurants & Winery">
-                    <div class="card-content">
-                        <h4>Casablanca Restaurants & Winery</h4>
-                        <p>Premium meals for a delightful dining experience.</p>
-                        <a href="restaurant-menu.html?rest=casablanca" class="menu-link">View Menu</a>
-                    </div>
-                </div>
-                <div class="card image-layout">
-                    <img src="images/restauarant 4.jpg" alt="Native Foods & Delicacy">
-                    <div class="card-content">
-                        <h4>Native Foods & Delicacy</h4>
-                        <p>Fresh, traditional dishes from trusted chefs.</p>
-                        <a href="restaurant-menu.html?rest=native" class="menu-link">View Menu</a>
-                    </div>
-                </div>
+
+                <div class="menu-grid" id="main"></div>
+                <div class="menu-grid" id="desserts" style="display:none;"></div>
+                <div class="menu-grid" id="beverages" style="display:none;"></div>
             </div>
         </section>
     </main>
@@ -97,8 +87,8 @@
                 <h2>Links</h2>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="auth.html">Login</a></li>
-                    <li><a href="auth.html">Sign Up</a></li>
+                    <li><a href="index.html#restaurants">Restaurants</a></li>
+                    <li><a href="index.html#reviews">Reviews</a></li>
                 </ul>
             </div>
             <div>
@@ -120,5 +110,6 @@
     </footer>
 
     <script src="Javascript/cart.js"></script>
+    <script src="Javascript/restaurant.js"></script>
 </body>
 </html>
